@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ResultMetrics.Store.PostgreSQL.Models;
 
 namespace ResultMetrics.Store.PostgreSQL;
 
@@ -12,4 +13,6 @@ public class ResultMetricsDbContext: DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ResultMetricsDbContext).Assembly);
     }
+    
+    public DbSet<Values> Values => Set<Values>();
 }
