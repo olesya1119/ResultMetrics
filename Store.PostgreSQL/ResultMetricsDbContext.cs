@@ -15,4 +15,5 @@ public class ResultMetricsDbContext: DbContext
     }
     
     public DbSet<Values> Values => Set<Values>();
+    public DbSet<Results> Results => Set<Results>();
 }
