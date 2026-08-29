@@ -4,5 +4,7 @@ namespace ResultMetrics.Store.PostgreSQL.Repositories;
 
 public interface IValuesRepository
 {
-    public Task InsertRangeAsync(IEnumerable<Values> values, CancellationToken ct = default); 
+    public Task InsertRangeAsync(IEnumerable<Values> values, CancellationToken ct = default);
+    
+    public Task DeleteByFileNameAsync(string fileName, CancellationToken ct);
 }

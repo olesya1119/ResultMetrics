@@ -1,4 +1,5 @@
-﻿using ResultMetrics.Store.PostgreSQL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ResultMetrics.Store.PostgreSQL.Models;
 
 namespace ResultMetrics.Store.PostgreSQL.Repositories;
 
@@ -22,5 +23,12 @@ public class ValuesRepository : IValuesRepository
             
             context.ChangeTracker.Clear();
         }
+    }
+    
+    public async Task DeleteByFileNameAsync(string fileName, CancellationToken ct)
+    {
+        await context.Values
+            .Where(x => x.FileName == fileName)
+            .ExecuteDeleteAsync(ct);
     }
 }

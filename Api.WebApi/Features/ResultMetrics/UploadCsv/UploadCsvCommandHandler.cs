@@ -60,6 +60,9 @@ public class UploadCsvCommandHandler : IRequestHandler<UploadCsvCommand, Result<
 
         await transactionManager.BeginTransactionAsync(ct);
 
+        await valuesRepository.DeleteByFileNameAsync(fileName, ct);
+        await resultsRepository.DeleteByFileNameAsync(fileName, ct);
+
         try
         {
             await valuesRepository.InsertRangeAsync(records);
