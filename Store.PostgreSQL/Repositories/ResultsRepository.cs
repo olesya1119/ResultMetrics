@@ -1,4 +1,7 @@
-﻿namespace ResultMetrics.Store.PostgreSQL.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ResultMetrics.Store.PostgreSQL.Models;
+
+namespace ResultMetrics.Store.PostgreSQL.Repositories;
 
 public class ResultsRepository : IResultsRepository
 {
@@ -7,5 +10,18 @@ public class ResultsRepository : IResultsRepository
     public ResultsRepository(ResultMetricsDbContext context)
     {
         this.context = context;
+    }
+
+    public async Task InsertAsync(Results results, CancellationToken ct = default)
+    {
+        await context.Results.AddAsync(results, ct);
+        await context.SaveChangesAsync(ct);
+    }
+    
+    public async Task DeleteByFileNameAsync(string fileName, CancellationToken ct)
+    {
+        await context.Results
+            .Where(x => x.FileName == fileName)
+            .ExecuteDeleteAsync(ct);
     }
 }
