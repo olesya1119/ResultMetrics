@@ -5,9 +5,17 @@ namespace ResultMetrics.Store.PostgreSQL;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPostgreSql(this IServiceCollection services, PostgreSqlOptions options)
+    public static IServiceCollection AddPostgreSql(this IServiceCollection services)
     {
-        services.AddDbContext<ResultMetricsDbContext>(dbOptions => dbOptions.UseNpgsql(options.ConnectionString));
+        services.AddDbContext<ResultMetricsDbContext>((serviceProvider, dbOptions) =>
+        {
+            var options = serviceProvider.GetRequiredService<PostgreSqlOptions>();
+
+            dbOptions
+                .UseNpgsql(options.ConnectionString)
+                .UseSnakeCaseNamingConvention();
+        });
+        
         return services;
     }
 }
