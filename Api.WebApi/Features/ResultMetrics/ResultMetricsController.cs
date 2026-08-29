@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ResultMetrics.Api.WebApi.Features.ResultMetrics.GetLatestValues;
 using ResultMetrics.Api.WebApi.Features.ResultMetrics.GetResults;
 using ResultMetrics.Api.WebApi.Features.ResultMetrics.UploadCsv;
 using ResultMetrics.Api.WebApi.Models;
@@ -46,6 +47,25 @@ public class ResultMetricsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetResults(
         [FromQuery] GetResultsQuery query,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(query, cancellationToken);
+
+        return this.ToActionResult(result);
+    }
+    
+    /// <summary>
+    /// Возвращает последние 10 значений указанного файла,
+    /// отсортированных по времени запуска операции.
+    /// </summary>
+    /// <param name="query">Параметры запроса.</param>
+    /// <param name="cancellationToken">Токен отмены операции.</param>
+    /// <returns>Последние 10 значений файла.</returns>
+    [HttpGet("values")]
+    [ProducesResponseType<IReadOnlyCollection<ValueModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetLatestValues(
+        [FromQuery] GetLatestValuesQuery query,
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(query, cancellationToken);

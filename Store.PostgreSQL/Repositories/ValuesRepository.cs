@@ -31,4 +31,14 @@ public class ValuesRepository : IValuesRepository
             .Where(x => x.FileName == fileName)
             .ExecuteDeleteAsync(ct);
     }
+    
+    public async Task<IReadOnlyCollection<Values>> GetLatestAsync(string fileName, int count, CancellationToken ct)
+    {
+        return await context.Values
+            .AsNoTracking()
+            .Where(x => x.FileName == fileName)
+            .OrderByDescending(x => x.Date)
+            .Take(count)
+            .ToListAsync(ct);
+    }
 }
