@@ -25,7 +25,7 @@ public class Result<TValue> : Result
         return new Result<TValue>(value, statusCode);
     }
 
-    public new static Result<TValue> Failure(Fault fault,  HttpStatusCode statusCode)
+    public static Result<TValue> Failure(Fault fault,  HttpStatusCode statusCode)
     {
         ArgumentNullException.ThrowIfNull(fault);
 
