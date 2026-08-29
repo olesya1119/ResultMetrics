@@ -7,18 +7,39 @@ namespace ResultMetrics.Api.WebApi.Features.ResultMetrics.GetResults;
 
 public class GetResultsQuery : IRequest<Result<IReadOnlyCollection<MetricsResult>>>
 {
+    /// <summary>
+    /// Дельта времени Date в секундах
+    /// </summary>
     public string? FileName { get; init; }
-
+    
+    /// <summary>
+    /// Минимальное дата и время, как момент запуска первой операции
+    /// </summary>
     public DateTime? MinDate { get; init; }
-
+    
+    /// <summary>
+    /// Среднее время выполнения
+    /// </summary>
     public DateTime? MaxDate { get; init; }
-
+    
+    /// <summary>
+    /// Среднее значение по показателям
+    /// </summary>
     public double? MinAvgValue { get; init; }
-
+    
+    /// <summary>
+    /// Медина по показателям
+    /// </summary>
     public double? MaxAvgValue { get; init; }
-
+    
+    /// <summary>
+    /// Максимальное значение показателя
+    /// </summary>
     public double? MinAvgExecutionTime { get; init; }
-
+    
+    /// <summary>
+    /// Минимальное значение показателя
+    /// </summary>
     public double? MaxAvgExecutionTime { get; init; }
 
     public class Validator : AbstractValidator<GetResultsQuery>
