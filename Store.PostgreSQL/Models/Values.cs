@@ -8,7 +8,7 @@ public class Values
     public long Id { get; set; }
     public string FileName { get; set; } = null!;
     public DateTime Date { get; set; }
-    public int ExecutionTime { get; set; }
+    public double ExecutionTime { get; set; }
     public double Value { get; set; }
 
     internal sealed class ValuesConfiguration : IEntityTypeConfiguration<Values>
@@ -17,9 +17,9 @@ public class Values
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.FileName).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Date) .IsRequired();
-            builder.Property(x => x.ExecutionTime) .IsRequired();
-            builder.Property(x => x.Value) .IsRequired();
+            builder.Property(x => x.Date).IsRequired().HasColumnType("timestamp without time zone");
+            builder.Property(x => x.ExecutionTime).IsRequired();
+            builder.Property(x => x.Value).IsRequired();
         }
     }
 }
