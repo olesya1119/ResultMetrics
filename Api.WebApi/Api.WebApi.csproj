@@ -4,6 +4,22 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>ResultMetrics.Api.WebApi</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="33.1.0" />
+      <PackageReference Include="FluentValidation" Version="12.1.1" />
+      <PackageReference Include="MediatR" Version="14.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Store.PostgreSQL\Store.PostgreSQL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="options.json" />
+    </ItemGroup>
 
 </Project>
