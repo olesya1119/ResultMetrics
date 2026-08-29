@@ -24,4 +24,58 @@ public class ResultsRepository : IResultsRepository
             .Where(x => x.FileName == fileName)
             .ExecuteDeleteAsync(ct);
     }
+    
+    public async Task<IReadOnlyCollection<Results>> GetAsync(
+        string? fileName,
+        DateTime? minDate,
+        DateTime? maxDate,
+        double? minAvgValue,
+        double? maxAvgValue,
+        double? minAvgExecutionTime,
+        double? maxAvgExecutionTime,
+        CancellationToken ct)
+    {
+        var query = context.Results.AsNoTracking().AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(fileName))
+        {
+            query = query.Where(x => x.FileName == fileName);
+        }
+
+        if (minDate.HasValue)
+        {
+            query = query.Where(x => x.MinDate >= minDate.Value);
+        }
+
+        if (maxDate.HasValue)
+        {
+            query = query.Where(x => x.MinDate <= maxDate.Value);
+        }
+
+        if (minAvgValue.HasValue)
+        {
+            query = query.Where(x => x.AvgValue >= minAvgValue.Value);
+        }
+
+        if (maxAvgValue.HasValue)
+        {
+            query = query.Where(x => x.AvgValue <= maxAvgValue.Value);
+        }
+
+        if (minAvgExecutionTime.HasValue)
+        {
+            query = query.Where(
+                x => x.AvgExecutionTime >= minAvgExecutionTime.Value);
+        }
+
+        if (maxAvgExecutionTime.HasValue)
+        {
+            query = query.Where(
+                x => x.AvgExecutionTime <= maxAvgExecutionTime.Value);
+        }
+
+        return await query
+            .OrderBy(x => x.MinDate)
+            .ToListAsync(ct);
+    }
 }
