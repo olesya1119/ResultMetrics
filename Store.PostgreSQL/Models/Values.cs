@@ -20,6 +20,9 @@ public class Values
             builder.Property(x => x.Date).IsRequired().HasColumnType("timestamp without time zone");
             builder.Property(x => x.ExecutionTime).IsRequired();
             builder.Property(x => x.Value).IsRequired();
+            
+            builder.HasIndex(x => x.FileName);
+            builder.HasIndex(x => x.Date);
         }
     }
 }

@@ -28,6 +28,11 @@ public class Results
             builder.Property(x => x.MedianValue).IsRequired();
             builder.Property(x => x.MinValue).IsRequired();
             builder.Property(x => x.MaxValue).IsRequired();
+            
+            builder.HasIndex(x => x.FileName).IsUnique();
+            builder.HasIndex(x => x.MinDate);
+            builder.HasIndex(x => x.AvgValue);
+            builder.HasIndex(x => x.AvgExecutionTime);
         }
     }
 }
