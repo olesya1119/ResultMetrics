@@ -17,6 +17,8 @@ builder.Services.AddMediatR(configuration =>
 builder.Services.AddScoped<IValuesRepository, ValuesRepository>();
 builder.Services.AddScoped<IResultsRepository, ResultsRepository>();
 builder.Services.AddScoped<ITransactionManager, TransactionManager>().AddApplicationOptions<PostgreSqlOptions>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddPostgreSql();
 
@@ -25,5 +27,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.MapControllers();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
